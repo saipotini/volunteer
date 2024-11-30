@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome to Volunteer Tracker</h1>
+<p>Track and manage your volunteer hours with ease!</p>
+
+<div>
+    <h2>Features:</h2>
+    <ul>
+        <li>Log your volunteer hours</li>
+        <li>Track total hours contributed</li>
+        <li>View your volunteering history</li>
+    </ul>
+
+    {% if not current_user.is_authenticated %}
+    <div>
+        <h3>Get Started</h3>
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+        <a href="{{ url_for('register') }}" class="btn">Register</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
