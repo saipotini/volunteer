@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Volunteer Hours</h1>
+
+{% if hours %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Organization</th>
+                <th>Hours</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in hours %}
+            <tr>
+                <td>{{ entry.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ entry.organization }}</td>
+                <td>{{ entry.hours }}</td>
+                <td>{{ entry.description or 'No description' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <h2>Total Hours</h2>
+        <p>{{ hours|sum(attribute='hours')|round(2) }} hours</p>
+    </div>
+{% else %}
+    <p>No volunteer hours logged yet.</p>
+{% endif %}
+
+<a href="{{ url_for('log_hours') }}" class="btn">Log New Hours</a>
+{% endblock %}
