@@ -51,6 +51,12 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        confirm_password = request.form.get('confirm-password')
+        
+        # Validate password confirmation
+        if password != confirm_password:
+            flash('Passwords do not match')
+            return redirect(url_for('register'))
         
         # Check if user already exists
         if User.query.filter_by(username=username).first():
@@ -59,6 +65,11 @@ def register():
         
         if User.query.filter_by(email=email).first():
             flash('Email already exists')
+            return redirect(url_for('register'))
+        
+        # Validate password strength
+        if len(password) < 8:
+            flash('Password must be at least 8 characters long')
             return redirect(url_for('register'))
         
         # Create new user
